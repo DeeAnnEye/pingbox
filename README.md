@@ -22,8 +22,7 @@
 
 - **Electron** – Desktop shell
 - **React + TypeScript** – UI & logic
-- **Vite** – Fast dev & build
-- **Node.js** – Runtime
+- **Vite** – Fast dev & build  
 
 ---
 

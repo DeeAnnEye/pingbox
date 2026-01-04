@@ -7,7 +7,7 @@ function App() {
   const [method, setMethod] = useState("get");
   const [request, setRequest] = useState("");
   // const [response, setResponse] = useState("");
-  const [header, setHeader] = useState("");
+  // const [header, setHeader] = useState("");
   const [loading, setLoading] = useState(false);
 
   const syntaxHighlight = (json: any) => {
@@ -36,54 +36,31 @@ function App() {
     }
   };
 
-  const getRequest = async () => {
+  const sendRequest = async () => {
     try {
       setLoading(true);
-      const res = await fetch(url);
-      const data = await res.json();
-      setLoading(false);
-      showJSON(data);
-    } catch (error) {
-      setLoading(false);
-      showJSON(error);
-    }
-  };
 
-  const postRequest = async () => {
-    try {
-      setLoading(true);
-      let headers = {
+      const headers: Record<string, string> = {
         "Content-Type": "application/json",
       };
-      if (header) {
-        headers = JSON.parse(header);
-      }
-      const res = await fetch(url, {
-        method: "POST",
+
+      const options: RequestInit = {
+        method,
         headers,
-        body: JSON.stringify(request),
-      });
+      };
+
+      if (method !== "GET" && method !== "DELETE") {
+        options.body = JSON.stringify(request);
+      }
+
+      const res = await fetch(url, options);
 
       const data = await res.json();
-      setLoading(false);
       showJSON(data);
     } catch (error) {
+      showJSON({ error: String(error) });
+    } finally {
       setLoading(false);
-      showJSON(error);
-    }
-  };
-
-  const sendRequest = () => {
-    switch (method) {
-      case "get":
-        getRequest();
-        break;
-      case "post":
-        postRequest();
-        break;
-      default:
-        console.log("Oops, no method");
-        break;
     }
   };
 
