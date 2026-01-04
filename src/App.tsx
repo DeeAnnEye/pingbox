@@ -43,12 +43,14 @@ function App() {
       };
 
       const options: RequestInit = {
-        method,
+        method: method.toUpperCase(),
         headers,
       };
 
-      if (method !== "GET" && method !== "DELETE") {
-        options.body = JSON.stringify(request);
+      if (method !== "get" && method !== "delete") {
+        if (request && Object.keys(request).length > 0) {
+          options.body = JSON.stringify(request);
+        }
       }
 
       const res = await fetch(url, options);
