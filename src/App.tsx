@@ -6,8 +6,6 @@ function App() {
   const [url, setUrl] = useState("");
   const [method, setMethod] = useState("get");
   const [request, setRequest] = useState("");
-  // const [response, setResponse] = useState("");
-  // const [header, setHeader] = useState("");
   const [loading, setLoading] = useState(false);
 
   const syntaxHighlight = (json: any) => {
